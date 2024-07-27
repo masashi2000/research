@@ -66,7 +66,7 @@ def generate_2250_prompts():
                 prompt += "neither {} nor {}".format(markers["LOW_{}".format(domain)][i], markers["HIGH_{}".format(domain)][i])
                 prompt += ", "
             prompt += 'and neither {} nor {}."'.format(markers["LOW_{}".format(domain)][-1], markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから
-            prompt += " Write an essay as this person. The essay must reflect the person’s character and description. When you write, do not include headdings or titles. Please enclose your essay in ```. The essay can cover, but are not necessarily limited to, the following topics:work, family, friends, free time, romantic life, TV / music / media consumption, and communication with others."
+            prompt += " Write an essay as this person. The essay must reflect the person’s character and description. When writing the essay, do not include headings or titles. Just write the body of the essay."
             new_row = {'persona_id': row.id, 'domain': domain, 'level': level, 'prompt': prompt}
             df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
