@@ -53,7 +53,7 @@ def generate_2250_prompts():
                     prompt += "{}".format(markers["HIGH_{}".format(domain)][i])
                     prompt += ", "
                 prompt += 'and {}{}."'.format(qualifier, markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから, あと最後の"を忘れずにね！
-                prompt += " Generate a list of 20 different Facebook status updates as this person. Each update must be verbose and reflect the person’s character and description. The updates should cover, but should not be limited to, the following topics: work, family, friends, free time, romantic life, TV / music / media consumption, and communication with others."
+                prompt += " Write an essay as this person. The essay must reflect the person’s character and description. When writing the essay, do not include headings or titles. Just write the body of the essay."
                 new_row = {'persona_id': row.id, 'domain': domain, 'level': level, 'prompt': prompt}
                 df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
                 level -= 1
