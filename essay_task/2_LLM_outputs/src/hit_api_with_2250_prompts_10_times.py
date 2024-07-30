@@ -143,6 +143,7 @@ class Ollama4TeamEmbeddings(OllamaEmbeddings):
 
 def hit_api_with_2250_prompts_10_times():
     model_name = input("Model name? >>")
+    model_name = model_name.replace(":", "-")
     llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://localhost:3000")
 
 
