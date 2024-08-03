@@ -191,7 +191,7 @@ if __name__ == "__main__":
     )
 
     # 各周回の結果を保存するためのファイル名のリスト
-    result_files = [f'prediction_result{i}_phi314b-medium-4k-instruct-q5_K_M.csv' for i in range(1, 11)]
+    result_files = [f'prediction_result{i}_phi3-14b-medium-4k-instruct-q5_K_M.csv' for i in range(1, 11)]
     
     # ヘッダーを書き込む
     for result_file in result_files:
@@ -204,7 +204,7 @@ if __name__ == "__main__":
     # 10周実行
     for attempt in range(10):
         # CSVファイルを読み込む
-        df = pd.read_csv('result{}_phi314b-medium-4k-instruct-q5_K_M.csv'.format(attempt+1)))
+        df = pd.read_csv('result{}_phi3-14b-medium-4k-instruct-q5_K_M.csv'.format(attempt+1)))
         for index, row in df.iterrows():
             text = row['result']
             predictions = predict(text, embed, op_dir, token_length, finetune_model, dataset)
