@@ -143,7 +143,7 @@ class Ollama4TeamEmbeddings(OllamaEmbeddings):
 
 def hit_api_with_2250_prompts_10_times():
     model_name = input("Model name? >>")
-    llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://localhost:3000")
+    llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://100.80.132.15:3000")
     model_name = model_name.replace(":", "-")
 
 
@@ -155,7 +155,7 @@ def hit_api_with_2250_prompts_10_times():
 
     # ヘッダーを書き込む
     for result_file in result_files:
-        with open(result_file, mode='w', newline='') as file:
+        with open(result_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             # 元のデータフレームのカラム名に 'result' を追加
             result_columns = df.columns.tolist() + ['result'] + ['model_name']
@@ -173,7 +173,7 @@ def hit_api_with_2250_prompts_10_times():
             row_data = row.tolist() + [result] + [model_name]
             
             # 該当するresultファイルに書き込む
-            with open(result_files[attempt], mode='a', newline='') as file:
+            with open(result_files[attempt], mode='a', newline='', encoding='utf-8') as file:
                 writer = csv.writer(file)
                 writer.writerow(row_data)
 
