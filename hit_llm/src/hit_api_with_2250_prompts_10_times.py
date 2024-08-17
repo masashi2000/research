@@ -1,3 +1,7 @@
+##################################################
+# 実行方法
+# プロンプトのCSVファイルを引数で与えるだけ
+##################################################
 from typing import Any, Dict, Iterator, List, Optional
 import pandas as pd
 import csv
@@ -143,7 +147,7 @@ class Ollama4TeamEmbeddings(OllamaEmbeddings):
 
 def hit_api_with_2250_prompts_10_times(csv_file_path):
     model_name = input("Model name? >>")
-    llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://100.80.132.15:3000")
+    llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://localhost:3000")
     model_name = model_name.replace(":", "-")
 
 
