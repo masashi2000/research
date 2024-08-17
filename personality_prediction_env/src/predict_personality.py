@@ -205,7 +205,7 @@ if __name__ == "__main__":
     # 10周実行
     for attempt in range(10):
         # CSVファイルを読み込む
-        df = pd.read_csv(f'result{}_{model_name}.csv'.format(attempt+1)))
+        df = pd.read_csv(f'result{}_{model_name}.csv'.format(attempt+1))
         for index, row in df.iterrows():
             text = row['result']
             predictions = predict(text, embed, op_dir, token_length, finetune_model, dataset)
