@@ -42,6 +42,20 @@ def generate_2250_prompts():
         # リスト型の修飾子を作る
         qualifiers = ["extremely ", "very ", "", "a bit "] 
 
+        # LOWレベルの時
+        for row in df_personas.itertuples():
+            level = 1
+            for qualifier in qualifiers:
+                prompt = """For the following task, respond in a way that matches this description: "{} I'm """.format(row.persona)
+                for i in range(0, len(markers["LOW_{}".format(domain)])-1):
+                    prompt += "{}".format(qualifier)
+                    prompt += "{}".format(markers["LOW_{}".format(domain)][i])
+                    prompt += ", "
+                prompt += 'and {}{}."'.format(qualifier, markers["LOW_{}".format(domain)][-1]) # 最後はandを入れないとだめだから, あと最後の"を忘れずにね！
+                prompt += " Write an essay as this person. The essay must reflect the person’s character and description. When writing the essay, do not include headings or titles. Just write the body of the essay."
+                new_row = {'persona_id': row.id, 'domain': domain, 'level': level, 'prompt': prompt}
+                df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+                level += 1
 
         # HIGHレベルの時
         for row in df_personas.itertuples():

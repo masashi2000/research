@@ -1,9 +1,4 @@
-###########################
-#変更点
-# ver1に比べて、ダブルクオーテーションをつけた。
-###########################
-
-import pandas as ps
+import pandas as pd
 import json
 
 def generate_2250_prompts():    
@@ -52,7 +47,7 @@ def generate_2250_prompts():
                     prompt += "{}".format(qualifier)
                     prompt += "{}".format(markers["HIGH_{}".format(domain)][i])
                     prompt += ", "
-                prompt += 'and {}{}."'.format(qualifier, markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから, あと最後の"を忘れずにね！
+                prompt += "and {}{}.".format(qualifier, markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから
                 prompt += " Generate a list of 20 different Facebook status updates as this person. Each update must be verbose and reflect the person’s character and description. The updates should cover, but should not be limited to, the following topics: work, family, friends, free time, romantic life, TV / music / media consumption, and communication with others."
                 df = df.append({'persona_id': row.id, 'domain': domain, 'level': level, 'prompt': prompt }, ignore_index=True)
                 level -= 1
@@ -64,7 +59,7 @@ def generate_2250_prompts():
             for i in range(0, len(markers["LOW_{}".format(domain)])-1):
                 prompt += "neither {} nor {}".format(markers["LOW_{}".format(domain)][i], markers["HIGH_{}".format(domain)][i])
                 prompt += ", "
-            prompt += 'and neither {} nor {}."'.format(markers["LOW_{}".format(domain)][-1], markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから
+            prompt += "and neither {} nor {}.".format(markers["LOW_{}".format(domain)][-1], markers["HIGH_{}".format(domain)][-1]) # 最後はandを入れないとだめだから
             prompt += " Generate a list of 20 different Facebook status updates as this person. Each update must be verbose and reflect the person’s character and description. The updates should cover, but should not be limited to, the following topics: work, family, friends, free time, romantic life, TV / music / media consumption, and communication with others."
             df = df.append({'persona_id': row.id, 'domain': domain, 'level': level, 'prompt': prompt }, ignore_index=True)
 
