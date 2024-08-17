@@ -141,14 +141,14 @@ class Ollama4TeamEmbeddings(OllamaEmbeddings):
             )
 
 
-def hit_api_with_2250_prompts_10_times():
+def hit_api_with_2250_prompts_10_times(csv_file_path):
     model_name = input("Model name? >>")
     llm = Ollama4Team(model=model_name, password="ollamasakurai", base_url="http://100.80.132.15:3000")
     model_name = model_name.replace(":", "-")
 
 
     # CSVファイルを読み込む
-    df = pd.read_csv('2250_prompts.csv')
+    df = pd.read_csv(csv_file_path)
 
     # 各周回の結果を保存するためのファイル名のリスト
     result_files = [f'result{i}_{model_name}.csv' for i in range(1, 11)]
