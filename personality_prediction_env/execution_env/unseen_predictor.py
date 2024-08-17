@@ -169,6 +169,7 @@ def predict(new_text, embed, op_dir, token_length, finetune_model, dataset):
 
 if __name__ == "__main__":
     (
+        input_dir,
         dataset,
         token_length,
         batch_size,
