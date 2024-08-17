@@ -185,7 +185,13 @@ def hit_api_with_2250_prompts_10_times(csv_file_path):
 
 
 def main():
-    hit_api_with_2250_prompts_10_times()
+    # コマンドライン引数を解析するためのコード
+    parser = argparse.ArgumentParser(description='Hit API with 2250 prompts 10 times')
+    parser.add_argument('csv_file_path', type=str, help='Path to the CSV file with prompts')
+    args = parser.parse_args()
+
+    # csv_file_path を関数に渡す
+    hit_api_with_2250_prompts_10_times(args.csv_file_path)
 
 if __name__ == "__main__":
     main()
