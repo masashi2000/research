@@ -1,3 +1,15 @@
+#################################################################
+#使い方
+# コマンドは下記のように実行しよう。
+# まず、research/personality_prediction_env/execution_env　のパスにて実行する
+# 次に、予測に使うデータがあるディレクトリは対象のファイルしか存在しないようにする。2250.csvがあったりしたらダメ。
+# そして下記のように実行する, -input_dirオプションは必要
+#
+# python ../src/predict_personality.py -input_dir "予測に使うデータのあるディレクトリの相対パス"
+#
+# 実行後のデータたちは予測に使うデータのあるディレクトリにある。
+#
+#################################################################
 import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
@@ -172,9 +184,128 @@ def predict(new_text, embed, op_dir, token_length, finetune_model, dataset):
     #     binary_prediction = "Yes" if prediction > 0.5 else "No"
     #     print(f"{trait}: {binary_prediction}: {prediction:.3f}")
 
+#
+#if __name__ == "__main__":
+#    (
+#        dataset,
+#        token_length,
+#        batch_size,
+#        embed,
+#        op_dir,
+#        mode,
+#        embed_mode,
+#        finetune_model,
+#    ) = utils.parse_args_predictor()
+#    print(
+#        "{} | {} | {} | {} | {} | {}".format(
+#            dataset, embed, token_length, mode, embed_mode, finetune_model
+#        )
+#    )
+#
+#    # 各周回の結果を保存するためのファイル名のリスト
+#    model_name = input("Model name? >>")
+#    result_files = [f'prediction_result{i}_{model_name}.csv' for i in range(1, 11)]
+#    
+#    # ヘッダーを書き込む
+#    for result_file in result_files:
+#        with open(result_file, mode='w', newline='') as file:
+#            writer = csv.writer(file)
+#            # 元のデータフレームのカラム名に 予測結果の項目 を追加
+#            result_columns = df.columns.tolist() + ['EXT_p'] + ['NEU_p'] + ['AGR_p'] + ['CON_p'] + ['OPN_p']
+#            writer.writerow(result_columns)
+#
+#    # 10周実行
+#    for attempt in range(10):
+#        # CSVファイルを読み込む
+#        df = pd.read_csv(f'result{}_{model_name}.csv'.format(attempt+1))
+#        for index, row in df.iterrows():
+#            text = row['result']
+#            predictions = predict(text, embed, op_dir, token_length, finetune_model, dataset)
+#            # 結果のアイテムたちを格納する。
+#            traits_results = []
+#            for trait, prediction in predictions.items():
+#                prediction = round(prediction,3)
+#                traits_results.append(prediction)
+#                
+#            # 現在の行データをリストに変換し、結果を格納
+#            row_data = row.tolist() + [traits_results[0]] + [traits_results[1]] + [traits_results[2]] + [traits_results[3]] + [traits_results[4]] # ここにつなぎ合わせるデータを書きまくる！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+#            
+#            # 該当するresultファイルに書き込む
+#            with open(result_files[attempt], mode='a', newline='') as file:
+#                writer = csv.writer(file)
+#import os
+#import glob
+#import pandas as pd
+#import csv
+#import sys
+#
+#if __name__ == "__main__":
+#    (
+#        input_dir,
+#        dataset,
+#        token_length,
+#        batch_size,
+#        embed,
+#        op_dir,
+#        mode,
+#        embed_mode,
+#        finetune_model,
+#    ) = utils.parse_args_predictor()
+#
+#    print(
+#        "{} | {} | {} | {} | {} | {} | Input directory: {}".format(
+#            dataset, embed, token_length, mode, embed_mode, finetune_model, input_dir
+#        )
+#    )
+#
+#    # 指定されたディレクトリ内のすべてのCSVファイルを取得
+#    csv_files = glob.glob(os.path.join(input_dir, '*.csv'))
+#
+#    # ファイル名のリストを表示（デバッグ用）
+#    print(f"Processing files: {csv_files}")
+#
+#    # 最初のCSVファイルを読み込み、カラム名を取得
+#    if csv_files:
+#        df_sample = pd.read_csv(csv_files[0])
+#        result_columns = df_sample.columns.tolist()  # 最初のCSVファイルからカラム名を取得
+#    else:
+#        raise ValueError("No CSV files found in the specified directory.")
+#
+#    # 予測結果の項目を追加
+#    result_columns.extend(['EXT_p', 'NEU_p', 'AGR_p', 'CON_p', 'OPN_p'])
+#
+#    # 各周回の結果を保存するためのファイル名のリスト
+#    model_name = input("Model name? >>")
+#    result_files = [f'prediction_result{i}_{model_name}.csv' for i in range(1, len(csv_files) + 1)]
+#
+#    # ヘッダーを書き込む
+#    for result_file in result_files:
+#        with open(result_file, mode='w', newline='') as file:
+#            writer = csv.writer(file)
+#            writer.writerow(result_columns)
+#
+#    # 各CSVファイルに対して実行
+#    for i, csv_file in enumerate(csv_files):
+#        df = pd.read_csv(csv_file)
+#        for index, row in df.iterrows():
+#            text = row['result']
+#            predictions = predict(text, embed, op_dir, token_length, finetune_model, dataset)
+#            traits_results = [round(predictions[trait], 3) for trait in ['EXT', 'NEU', 'AGR', 'CON', 'OPN']]
+#            row_data = row.tolist() + traits_results
+#
+#            with open(result_files[i], mode='a', newline='') as file:
+#                writer = csv.writer(file)
+#                writer.writerow(row_data)
+
+import os
+import glob
+import pandas as pd
+import csv
+import sys
 
 if __name__ == "__main__":
     (
+        input_dir,
         dataset,
         token_length,
         batch_size,
@@ -184,41 +315,50 @@ if __name__ == "__main__":
         embed_mode,
         finetune_model,
     ) = utils.parse_args_predictor()
+
     print(
-        "{} | {} | {} | {} | {} | {}".format(
-            dataset, embed, token_length, mode, embed_mode, finetune_model
+        "{} | {} | {} | {} | {} | {} | Input directory: {}".format(
+            dataset, embed, token_length, mode, embed_mode, finetune_model, input_dir
         )
     )
 
-    # 各周回の結果を保存するためのファイル名のリスト
-    model_name = input("Model name? >>")
-    result_files = [f'prediction_result{i}_{model_name}.csv' for i in range(1, 11)]
-    
-    # ヘッダーを書き込む
-    for result_file in result_files:
+    # 指定されたディレクトリ内のすべてのCSVファイルを取得
+    csv_files = glob.glob(os.path.join(input_dir, '*.csv'))
+
+    # ファイル名のリストを表示（デバッグ用）
+    print(f"Processing files: {csv_files}")
+
+    # 最初のCSVファイルを読み込み、カラム名を取得
+    if csv_files:
+        df_sample = pd.read_csv(csv_files[0])
+        result_columns = df_sample.columns.tolist()  # 最初のCSVファイルからカラム名を取得
+    else:
+        raise ValueError("No CSV files found in the specified directory.")
+
+    # 予測結果の項目を追加
+    result_columns.extend(['EXT_p', 'NEU_p', 'AGR_p', 'CON_p', 'OPN_p'])
+
+    # 各CSVファイルに対して実行
+    for csv_file in csv_files:
+        # 読み込んだCSVファイルの名前の先頭に 'prediction_' を追加して保存ファイル名を生成
+        base_name = os.path.basename(csv_file)
+        result_file = os.path.join(input_dir, f'prediction_{base_name}')
+
+        # ヘッダーを書き込む
         with open(result_file, mode='w', newline='') as file:
             writer = csv.writer(file)
-            # 元のデータフレームのカラム名に 予測結果の項目 を追加
-            result_columns = df.columns.tolist() + ['EXT_p'] + ['NEU_p'] + ['AGR_p'] + ['CON_p'] + ['OPN_p']
             writer.writerow(result_columns)
 
-    # 10周実行
-    for attempt in range(10):
-        # CSVファイルを読み込む
-        df = pd.read_csv(f'result{}_{model_name}.csv'.format(attempt+1))
+        # CSVファイルの内容を読み込んで処理
+        df = pd.read_csv(csv_file)
         for index, row in df.iterrows():
             text = row['result']
             predictions = predict(text, embed, op_dir, token_length, finetune_model, dataset)
-            # 結果のアイテムたちを格納する。
-            traits_results = []
-            for trait, prediction in predictions.items():
-                prediction = round(prediction,3)
-                traits_results.append(prediction)
-                
-            # 現在の行データをリストに変換し、結果を格納
-            row_data = row.tolist() + [traits_results[0]] + [traits_results[1]] + [traits_results[2]] + [traits_results[3]] + [traits_results[4]] # ここにつなぎ合わせるデータを書きまくる！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-            
-            # 該当するresultファイルに書き込む
-            with open(result_files[attempt], mode='a', newline='') as file:
+            traits_results = [round(predictions[trait], 3) for trait in ['EXT', 'NEU', 'AGR', 'CON', 'OPN']]
+            row_data = row.tolist() + traits_results
+
+            with open(result_file, mode='a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow(row_data)
+
+        print(f"Processed and saved: {result_file}")
