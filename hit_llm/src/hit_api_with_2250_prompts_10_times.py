@@ -8,6 +8,7 @@ import csv
 import requests
 from langchain_community.llms import Ollama
 from langchain_community.embeddings import OllamaEmbeddings
+import argparse
 
 class Ollama4Team(Ollama):
     """Ollama4Team is designed for team usage of Ollama.
